@@ -1,0 +1,34 @@
+name: Automate Data Preprocessing
+
+on:
+  push:
+    paths:
+      - 'smart_shipment_logistics.csv'
+      - 'automate_veva.py'
+  workflow_dispatch:
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install pandas scikit-learn joblib
+
+      - name: Run Preprocessing Script
+        run: python automate_veva.py
+
+      - name: Commit and Push Processed Data
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add dataset_preprocessing/
+          git commit -m "Auto-update processed data" || echo "No changes to commit"
+          git push
