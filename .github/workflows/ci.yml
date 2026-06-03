@@ -28,9 +28,10 @@ jobs:
 
       - name: Build & Push Docker Model
         env:
-          MLFLOW_TRACKING_URI: "https://dagshub.com/VevaR02/Shipment-MLOps" 
+          MLFLOW_TRACKING_URI: "https://dagshub.com/VevaR02/Shipment-MLOps.mlflow"
+          MLFLOW_TRACKING_USERNAME: "VevaR02"
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
           mlflow models build-docker -m "runs:/a577762d5619442baddc818122045944/shipment_model" -n ${{ secrets.DOCKER_USERNAME }}/smart-shipment-model:latest
           
-          # Push ke Docker Hub
           docker push ${{ secrets.DOCKER_USERNAME }}/smart-shipment-model:latest
