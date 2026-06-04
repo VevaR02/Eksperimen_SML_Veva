@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'smart_shipment_logistics.csv'
-      - 'automate_veva.py'
+      - 'preprocessing/automate_veva.py'
   workflow_dispatch:
 
 jobs:
@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
-          git add dataset_preprocessing/
+          git add preprocessing/dataset_preprocessing/
           git commit -m "Auto-update processed data" || echo "No changes to commit"
           git push
